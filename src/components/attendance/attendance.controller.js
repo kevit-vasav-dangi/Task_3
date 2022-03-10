@@ -1,6 +1,6 @@
 //import { Response, Request } from 'express';
 const { Response, Request } = require('express')
-// import { ATTENDENCE_ERROR_CODES } from './attendence.errors';
+
 // import HttpException from '../../utils/error.utils';
 //import Attendence from './attendence.model';
 const Attendence = require('./attendance.model')
@@ -20,14 +20,3 @@ class AttendenceController {
 }
 //export default AttendenceController;
 module.exports = AttendenceController
-// import { Request, Response, Application } from 'express';
-
-// // TODO Figure out how NOT to use require here.
-// const express = require('express');
-// var app: Application = express();
-
-// app.get('/', function (req: Request, res: Response) {
-//   res.send('Hello World')
-// });
-
-// app.listen(3000);

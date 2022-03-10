@@ -12,15 +12,18 @@ const { USER_ERROR_CODES } = require('./user.error.js')
 class UserController {
   async signUpUser(req, res, next) {
     try {
-      //const { name, email, password, role } = req.body;
-      console.log(req.body);
+      const { name, email, password, role } = req.body;
+      //console.log(req.body);
       const userObject = {
-        name:req.body.name,
-        email:req.body.email,
-        password:req.body.password,
-        role:req.body.role,
+        name,
+        email,
+        password,
+        role,
       };
+      //console.log('**********');
+      //console.log(userObject);
       const user = await createNewUser(userObject);
+      //console.log('############');
       return res.status(200).json(user);
     } catch (error) {
       return next(error);
@@ -30,11 +33,11 @@ class UserController {
   async signInUser(req, res , next ) {
     try {
       const { email, password } = req.body;
-      console.log(req.body);
+      //console.log(req.body);
       if (!email || !password) {
         throw new HttpException(400, USER_ERROR_CODES.SIGN_IN_BAD_REQUEST, 'SIGN_IN_BAD_REQUEST', '', {});
       }
-
+      console.log(email);
       const userData = await User.findByCredentials(email, password);
       if (!userData) {
         throw new HttpException(404, USER_ERROR_CODES.SIGN_IN_FAIL, 'SIGN_IN_FAIL', '', {});

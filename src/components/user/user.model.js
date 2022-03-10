@@ -1,4 +1,4 @@
-const {mongoose,Model,Schema} = require('mongoose')
+const { mongoose, Model, Schema } = require('mongoose')
 //import bcryptjs from 'bcryptjs';
 //import jwt from 'jsonwebtoken';
 //import validator from 'validator';
@@ -11,8 +11,7 @@ const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const Config = require('../../environment/index.js')
 const HttpException = require('../../utils/error.util.js')
-
-
+// const User = mongoose.model('User')
 const signInUserSchema = new Schema({
   email: {
     email: {
@@ -30,7 +29,7 @@ const signInUserSchema = new Schema({
     //errorMessage: 'Enter valid email Id',
   },
   password: {
-    type:String,
+    type: String,
     required: true,
     minLength: 7,
     trim: true,
@@ -141,9 +140,9 @@ UserSchema.pre('save', async function (next) {
 
   next();
 });
-userModel=mongoose.model('User',UserSchema),
-//export default mongoose.model<user, x>('User', UserSchema);
-module.exports ={
+userModel = mongoose.model('User', UserSchema),
+  //export default mongoose.model<user, x>('User', UserSchema);
+  module.exports = {
     userModel,
     signInUserSchema
-} 
+  } 

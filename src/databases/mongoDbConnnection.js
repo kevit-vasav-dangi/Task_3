@@ -10,9 +10,9 @@ const dbConnection = {
         useUnifiedTopology: true,
     }
 }
-// mongoose.connect(Config.MONGODB_URL,{
+mongoose.connect(Config.MONGODB_URL,{
 
-// })
+})
 
 //export default dbConnection
 module.exports = dbConnection
