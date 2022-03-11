@@ -1,19 +1,17 @@
-//import { NextFunction,Request , Response } from "express";
+
 const { NextFunction,Request , Response } = require('express')
 const User = require('../components/user/user.model.js')
-//import User from '../components/user/user.model.mjs'
-//import {USER_ERROR_CODES} from '../components/user'
-/*const {USER_ERROR_CODES} = require('../components/user')*/
-//import HttpException from "../utils/error.util.js";
 const HttpException = require('../utils/error.util.js')
 
 const AUTH_ERROR_CODES = {
     HEADERS_NOT_SET_IN_REQUEST: 'Request not contain auth token'
 };
 
-class Authenticate {
-    async authorize(req, res, next) {
-      const token = req.header('authorization')?.replace('Bearer ', '');
+  //console.log('hello');
+  
+    const authorize = async (req, res, next)=> {
+      const token = req.header('authorization').replace('Bearer ', '');
+      //console.log(token);
       console.log(`"Token = "`, token);
   
       if (!token) {
@@ -30,8 +28,8 @@ class Authenticate {
   
       next();
     }
-  }
-const authenticationMiddleware = new Authenticate();
-// module.exports = authenticationMiddleware
+  
 
-module.exports = authenticationMiddleware;
+// module.exports = authenticationMiddleware
+// const authenticationMiddleware = new Authenticate()
+module.exports =  authorize

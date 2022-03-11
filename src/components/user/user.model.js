@@ -81,7 +81,7 @@ UserSchema.statics.findByCredentials = async function (email, password) {
   // console.log(email);
   // console.log(password);
   const user = await this.findOne({ email });
-  console.log(user);
+  //console.log(user);
 
   if (!user) {
     throw new HttpException(404, USER_ERROR_CODES.USER_NOT_FOUND, 'USER_NOT_FOUND', '', {
@@ -120,8 +120,10 @@ UserSchema.statics.findByToken = async function (token) {
 
 UserSchema.methods.getAuthToken = function () {
   const access = 'auth';
+  const user = this
+  //console.log(user._id);
   const token = jwt
-    .sign({ _id: this._id.toHexString(), access }, Config.JWT_PRIVATE_KEY, {
+    .sign({ _id: user._id.toHexString(), access }, Config.JWT_PRIVATE_KEY, {
       expiresIn: '3d', // 3 days
     })
     .toString();
@@ -140,9 +142,7 @@ UserSchema.pre('save', async function (next) {
 
   next();
 });
-userModel = mongoose.model('User', UserSchema),
+User = mongoose.model('User', UserSchema),
   //export default mongoose.model<user, x>('User', UserSchema);
-  module.exports = {
-    userModel,
-    signInUserSchema
-  } 
+module.exports = User
+   

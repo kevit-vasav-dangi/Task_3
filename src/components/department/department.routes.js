@@ -1,7 +1,7 @@
 //import Router from 'express'
 const Router = require('express')
 //import { authenticationMiddleware } from '../../'
-const { authenticationMiddleware } = require('../../middlewares/auth.middleware.js')
+const { authorize } = require('../../middlewares/auth.middleware.js')
 const DepartmentController = require('./department.controller.js')
 //import DepartmentController from './department.controller.js'
 
@@ -17,7 +17,7 @@ class DepartmentRoute {
     initializeRoutes() {
         this.router.get(`${this.path}`, this.departmentController.getDepartments);
         
-        this.router.post(`${this.path}/update`, /*authenticationMiddleware.authorize(),*/this.departmentController.addDepartment)
+        this.router.post(`${this.path}/update`, /*authorize,*/this.departmentController.addDepartment)
     }
 }
 

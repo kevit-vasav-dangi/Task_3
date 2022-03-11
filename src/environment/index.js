@@ -10,7 +10,7 @@ const environment = {
     APP_PORT:env.APP_PORT,
     MONGODB_URL:env.MONGODB_URL,
     //JWT_AUTH:env.JWT_AUTH_KEY,
-    //JWT_PRIVATE_KEY:jwtPrivateKey,
+    JWT_PRIVATE_KEY:'atlas',
     //JWT_PUBLIC_KEY:jwitPublicKey
 }
 

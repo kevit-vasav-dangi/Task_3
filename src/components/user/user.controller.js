@@ -37,7 +37,7 @@ class UserController {
       if (!email || !password) {
         throw new HttpException(400, USER_ERROR_CODES.SIGN_IN_BAD_REQUEST, 'SIGN_IN_BAD_REQUEST', '', {});
       }
-      console.log(email);
+      //console.log(email);
       const userData = await User.findByCredentials(email, password);
       if (!userData) {
         throw new HttpException(404, USER_ERROR_CODES.SIGN_IN_FAIL, 'SIGN_IN_FAIL', '', {});

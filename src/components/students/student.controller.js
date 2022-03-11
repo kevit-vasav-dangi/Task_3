@@ -17,6 +17,7 @@ class StudentsController {
     }
 
     async addStudent(req, res) {
+        console.log(req.body);
         const student = new Student(req.body);
         try {
             await student.save();
