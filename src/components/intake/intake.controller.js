@@ -1,6 +1,4 @@
-//import { Request, Response } from 'express';
 const { Request, Response } = require('express')
-//import Intake from './intake.model';
 const Intake = require('./intake.model.js')
 
 class IntakeController {
@@ -27,5 +25,4 @@ class IntakeController {
     }
   }
 }
-//export default IntakeController;
 module.exports = IntakeController

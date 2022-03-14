@@ -1,5 +1,4 @@
 const {mongoose,Schema} = require('mongoose')
-//const {Schema,}= mongoose
 
 const departmentSchema = new Schema({
     name:{

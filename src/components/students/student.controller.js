@@ -1,6 +1,4 @@
-
 const { Request, Response } = require('express')
-//import Student from './student.model';
 const Student = require('./students.model.js')
 
 class StudentsController {
@@ -28,5 +26,4 @@ class StudentsController {
     }
 }
 
-//export default StudentsController;
 module.exports = StudentsController

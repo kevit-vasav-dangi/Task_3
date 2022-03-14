@@ -1,6 +1,4 @@
-//import mongoose, { Document, Schema } from 'mongoose';
 const {mongoose,Schema} = require('mongoose')
-
 
 const IntakeSchema = new Schema({
   year: {
@@ -21,4 +19,3 @@ const IntakeSchema = new Schema({
   ],
 });
 module.exports = mongoose.model('Intake',IntakeSchema)
-//export default mongoose.model<intake>('Intake', IntakeSchema);

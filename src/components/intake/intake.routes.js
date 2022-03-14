@@ -1,6 +1,4 @@
-//import { Router } from 'express';
 const {Router} = require('express')
-//import IntakeController from './intake.controller';
 const IntakeController = require('./intake.controller.js')
 
 class IntakeRoute {

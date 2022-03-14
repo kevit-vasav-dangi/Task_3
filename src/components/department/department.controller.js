@@ -1,8 +1,5 @@
-
 const HttpException = require('../../utils/error.util.js')
-//import Department from './department.model';
 const Department = require('./department.model.js')
-//import { DEPARTMENT_ERROR_CODES } from './department.errors';
 const { DEPARTMENT_ERROR_CODES } = require('./department.error.js')
 
 class DepartmentController {
@@ -20,8 +17,6 @@ class DepartmentController {
 
   async addDepartment(req, res) {
     const department = new Department(req.body);
-    //console.log(department);
-    //console.log(req.body);
     console.log(req.body);
     try {
       
@@ -37,5 +32,4 @@ class DepartmentController {
   }
 }
 
-//export default DepartmentController;
 module.exports = DepartmentController

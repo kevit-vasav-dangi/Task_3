@@ -1,13 +1,7 @@
-
 const {Router}= require('express')
-//const app = require('../../../server.js')
-
-
 const { validateRequestMiddleware } = require('../../middlewares/error.middleware.js')
 const UserController = require('./user.controller.js')
-
 const { signInUserSchema} = require('./user.model.js')
-
 
 class UserRoutes {
   path = '';
