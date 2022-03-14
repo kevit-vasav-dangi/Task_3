@@ -3,7 +3,8 @@ const {mongoose,Schema} = require('mongoose')
 const departmentSchema = new Schema({
     name:{
         type: String,
-        required: true
+        required: true,
+        unique:true
     },
     startDate: {
         type: Date,

@@ -16,10 +16,11 @@ class DepartmentController {
   }
 
   async addDepartment(req, res) {
+    console.log(req.user)
     const department = new Department(req.body);
-    console.log(req.body);
+    //console.log(req.body);
     try {
-      
+      //console.log(req.body.user);
       if (req.user.role === 'admin') {
         await department.save();
         res.status(200).send({ department });

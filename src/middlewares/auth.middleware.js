@@ -9,27 +9,50 @@ const AUTH_ERROR_CODES = {
 
   //console.log('hello');
   
-    const authorize = async (req, res, next)=> {
-      const token = req.header('authorization').replace('Bearer ', '');
-      //console.log(token);
-      console.log(`"Token = "`, token);
+    // const authorize = async (req, res, next)=> {
+    //   const token = req.header('authorization').replace('Bearer ', '');
+    //   console.log(token);
+    //   console.log(`"Token = "`, token);
   
-      if (!token) {
-        throw new HttpException(400, AUTH_ERROR_CODES.HEADERS_NOT_SET_IN_REQUEST, 'HEADERS_NOT_SET_IN_REQUEST', '', {});
+    //   if (!token) {
+    //     throw new HttpException(400, AUTH_ERROR_CODES.HEADERS_NOT_SET_IN_REQUEST, 'HEADERS_NOT_SET_IN_REQUEST', '', {});
+    //   }
+  
+    //   const user = await User.findByToken(token);
+  
+    //   if (!user) {
+    //     throw new HttpException(404, USER_ERROR_CODES.USER_NOT_FOUND, 'USER_NOT_FOUND', '', {});
+    //   }
+  
+    //   req.user = user;
+  
+    //   next();
+    // }
+    class Authenticate {
+      async authorize(req, res, next) {
+        const token = await req.header('Authorization')?.replace('Bearer ','')
+        console.log(token);
+        //console.log(`"Token = "`, token);
+    
+        if (!token) {
+          throw new HttpException(400, AUTH_ERROR_CODES.HEADERS_NOT_SET_IN_REQUEST, 'HEADERS_NOT_SET_IN_REQUEST', '', {});
+        }
+    
+        const user = await User.findByToken(token);
+    
+        if (!user) {
+          throw new HttpException(404, USER_ERROR_CODES.USER_NOT_FOUND, 'USER_NOT_FOUND', '', {});
+        }
+    
+        req.user = user;
+        //console.log(user);
+        next();
+        return req.user
+       
       }
-  
-      const user = await User.findByToken(token);
-  
-      if (!user) {
-        throw new HttpException(404, USER_ERROR_CODES.USER_NOT_FOUND, 'USER_NOT_FOUND', '', {});
-      }
-  
-      req.user = user;
-  
-      next();
     }
   
 
 // module.exports = authenticationMiddleware
 // const authenticationMiddleware = new Authenticate()
-module.exports =  authorize
+module.exports =  /*authenticationMiddleware*/Authenticate

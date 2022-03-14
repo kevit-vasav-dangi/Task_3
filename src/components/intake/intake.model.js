@@ -18,4 +18,5 @@ const IntakeSchema = new Schema({
     },
   ],
 });
-module.exports = mongoose.model('Intake',IntakeSchema)
+const Intake = mongoose.model('Intake',IntakeSchema)
+module.exports = Intake
