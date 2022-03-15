@@ -1,4 +1,3 @@
-
 const { NextFunction,Request , Response } = require('express')
 const User = require('../components/user/user.model.js')
 const HttpException = require('../utils/error.util.js')
@@ -31,9 +30,9 @@ const AUTH_ERROR_CODES = {
     class Authenticate {
       async authorize(req, res, next) {
         const token = await req.header('Authorization')?.replace('Bearer ','')
-        console.log(token);
+        //console.log(token);
+        
         //console.log(`"Token = "`, token);
-    
         if (!token) {
           throw new HttpException(400, AUTH_ERROR_CODES.HEADERS_NOT_SET_IN_REQUEST, 'HEADERS_NOT_SET_IN_REQUEST', '', {});
         }

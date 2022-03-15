@@ -1,15 +1,10 @@
-//import mongoose from 'mongoose';
 const mongoose = require('mongoose')
-//import HttpException from '../../utils/error.utils';
 const HttpException = require('../../utils/error.util.js')
-//import Attendance from '../attendance/attendance.model';
 const Attendance = require('../attendance/attendance.model.js')
-//import Batches from '../batches/batch.model';
 const Intake = require('../intake/intake.model.js')
-//import { ANALYTICS_ERROR_CODES } from './analytics.error';
 const { ANALYTICS_ERROR_CODES } = require('./analytics.error.js')
 
-async function findBranchesOrdByTotalStudents() {
+const findBranchesOrdByTotalStudents = async () => {
   try {
     return await Intake.aggregate([
       {
@@ -42,4 +37,41 @@ async function findBranchesOrdByTotalStudents() {
     throw new HttpException(500, ANALYTICS_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', err, null);
   }
 }
-module.exports= findBranchesOrdByTotalStudents()
+const listOfAbsentStudents = async (year, absentdate, semester, department) => {
+  try {
+    return await Attendance.aggregate([
+      {
+        $match: {
+          absentDate: new Date(absentdate),
+        },
+      },
+      {
+        $lookup: {
+          from: 'students',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'studentDetails',
+        },
+      },
+      {
+        $unwind: '$studentDetails',
+      },
+      {
+        $match: {
+          'studentDetails.year': year,
+          'studentDetails.semester': semester,
+          'studentDetails.department': new mongoose.Types.ObjectId(department),
+        },
+      },
+      {
+        $project: {
+          name: '$studentDetails.name',
+          _id: 0,
+        },
+      },
+    ]);
+  } catch (err) {
+    throw new HttpException(500, ANALYTICS_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', err, null);
+  }
+}
+module.exports = { findBranchesOrdByTotalStudents, listOfAbsentStudents }

@@ -21,30 +21,18 @@ class AnalyticsRoute {
 
   initializeRoutes() {
     this.router.post(
-      `${this.path}/list-of-batches`,
+      `${this.path}/intakes`,
       this.authenticate.authorize,
       //   validateRequestMiddleware(signUpUserSchema),
       this.analyticsController.listOfBatches
     );
-    // this.router.post(
-    //   `${this.path}/absent-students`,
-    //   authenticateMiddleware.authorize,
-    //   //   validateRequestMiddleware(signUpUserSchema),
-    //   this.analyticsController.findAbsentStudent
-    // );
-    // this.router.post(
-    //   `${this.path}/below-75-attendance`,
-    //   authenticateMiddleware.authorize,
-    //   //   validateRequestMiddleware(signUpUserSchema),
-    //   this.analyticsController.listOfABStudentBelow75Per
-    // );
-    // this.router.post(
-    //   `${this.path}/vacant-seats`,
-    //   authenticateMiddleware.authorize,
-    //   //   validateRequestMiddleware(signUpUserSchema),
-    //   this.analyticsController.vacantSeats
-    // );
+    this.router.post(
+      `${this.path}/absent-students`,
+      this.authenticate.authorize,
+      //   validateRequestMiddleware(signUpUserSchema),
+      this.analyticsController.findAbsentStudent
+    );
   }
 }
-//export default AnalyticsRoute;
+
 module.exports = AnalyticsRoute
