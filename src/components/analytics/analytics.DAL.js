@@ -74,4 +74,82 @@ const listOfAbsentStudents = async (year, absentdate, semester, department) => {
     throw new HttpException(500, ANALYTICS_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', err, null);
   }
 }
-module.exports = { findBranchesOrdByTotalStudents, listOfAbsentStudents }
+
+const listVacantSeats=async()=> {
+  try {
+    return await Intake.aggregate([
+      {
+        $unwind: '$branches',
+      },
+      {
+        $group: {
+          _id: '$year',
+          branches: {
+            $push: '$branches',
+          },
+          totalStudentsIntake: { $sum: '$branches.totalStudentsIntake' },
+        },
+      },
+      {
+        $sort: {
+          totalStudentsIntake: -1,
+        },
+      },
+      {
+        $lookup: {
+          from: 'students',
+          pipeline: [
+            {
+              $group: {
+                _id: '$year',
+                totalStudents: { $sum: 1 },
+              },
+            },
+          ],
+          as: 'students',
+        },
+      },
+      {
+        $project: {
+          totalStudentsIntake: 1,
+          branches: 1,
+          students: {
+            $filter: {
+              input: '$students',
+              cond: {
+                $eq: ['$$this._id', '$_id'],
+              },
+            },
+          },
+        },
+      },
+      {
+        $unwind: { path: '$students', preserveNullAndEmptyArrays: true },
+      },
+      {
+        $project: {
+          totalStudentsIntake: 1,
+          branches: 1,
+          students: {
+            $ifNull: ['$students', null, { _id: '$_id', totalStudents: 0 }],
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          batch: '$_id',
+          branches: '$branches',
+          totalStudents: '$students.totalStudents',
+          totalStudentsIntake: 1,
+          availableIntake: {
+            $subtract: ['$totalStudentsIntake', '$students.totalStudents'],
+          },
+        },
+      },
+    ]);
+  } catch (err) {
+    throw new HttpException(500, ANALYTICS_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', err, null);
+  }
+}
+module.exports = { findBranchesOrdByTotalStudents, listOfAbsentStudents ,listVacantSeats}

@@ -1,8 +1,5 @@
-//import { Response, Request } from 'express';
 const { Response, Request } = require('express')
 
-// import HttpException from '../../utils/error.utils';
-//import Attendence from './attendence.model';
 const Attendence = require('./attendance.model')
 
 
@@ -18,5 +15,4 @@ class AttendenceController {
     }
   }
 }
-//export default AttendenceController;
 module.exports = AttendenceController

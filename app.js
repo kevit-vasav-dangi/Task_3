@@ -13,9 +13,6 @@ const dbConnection = require('./src/databases/mongoDbConnnection')
 class App {
     constructor(routes) {
         this.app = express();
-        // this.app.use()
-        // this.app.use(express.urlencoded({ extended: true }));
-        //this.logg
         this.env = Config.NODE_ENV
         this.port = Config.APP_PORT;
 
@@ -26,7 +23,7 @@ class App {
     listen() {
         this.app.listen(this.port, () => {
             console.log(`=================================`);
-            console.log(`======= ENV: ${this.env} =======`);
+            console.log(`======= ENV: ${this.env} ========`);
             console.log(`🚀 App listening on the port ${this.port}`);
             console.log(`=================================`);
         })
@@ -34,16 +31,16 @@ class App {
 
     databaseConnection() {
         mongoose.connection.on('connected', () => {
-            console.log('🔥 DATABASE - Connected');
+            console.log('=====🔥 DATABASE - Connected=====');
         })
         mongoose.connection.on('error', err => {
             console.log(`DATABASE - Error:${err}`);
         })
     }
-
+    
     initializeRoutes(routes ) {
          routes.forEach(route => {
-             this.app.use('/', route.router)
+            this.app.use('/', route.router)
          });
     }
     initializeMiddlewares(){

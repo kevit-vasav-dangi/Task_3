@@ -7,17 +7,22 @@ const AttendenceSchema = new Schema({
   studentId: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Student',
+    unique:true,
+    ref: 'students',
   },
-  semester: {
-    type: Schema.Types.String,
-    required: true,
+  department:{
+    type:Schema.Types.ObjectId,
+    ref:'departments'
   },
-  isPresent: {
+  absentDate:{
+    type:Schema.Types.Date,
+    required:true
+  },
+  isAbsent: {
     type: Schema.Types.Boolean,
     required: true,
   },
-  onDate: {
+  isStudent: {
     type: Schema.Types.Date,
     required: true,
   },
