@@ -102,12 +102,14 @@ UserSchema.statics.findByToken = async function (token) {
     if (error && error.message.includes('jwt expired')) {
       hasSessionExpired = true;
     }
-    if (hasSessionExpired) {
-      throw new HttpException(404, USER_ERROR_CODES.USER_SESSION_EXPIRED, 'USER_SESSION_EXPIRED', '', {});
-    } else {
-      throw new HttpException(404, USER_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', '', {});
-    }
+    console.log(error);
+    // if (hasSessionExpired) {
+    //   throw new HttpException(404, USER_ERROR_CODES.USER_SESSION_EXPIRED, 'USER_SESSION_EXPIRED', '', {});
+    // } else {
+    //   throw new HttpException(404, USER_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', '', {});
+    // }
   }
+  console.log(decoded._id);
   return this.findOne({
     _id: decoded._id,
     // accessToken: token,

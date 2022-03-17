@@ -32,6 +32,12 @@ class AnalyticsRoute {
       //   validateRequestMiddleware(signUpUserSchema),
       this.analyticsController.findAbsentStudent
     );
+    this.router.post(
+      `${this.path}/vacant-seats`,
+      this.authenticate.authorize,
+      //   validateRequestMiddleware(signUpUserSchema),
+      this.analyticsController.vacantSeats
+    );
   }
 }
 

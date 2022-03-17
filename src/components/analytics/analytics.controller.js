@@ -1,6 +1,6 @@
 const { Response , Request , NextFunction}= require('express')
 const HttpException = require('../../utils/error.util.js')
-const {findBranchesOrdByTotalStudents,listOfAbsentStudents} = require('./analytics.DAL.js')
+const {findBranchesOrdByTotalStudents,listOfAbsentStudents,listVacantSeats} = require('./analytics.DAL.js')
 const { ANALYTICS_ERROR_CODES } = require('./analytics.error.js')
 
 class AnalyticsController {
@@ -20,10 +20,21 @@ class AnalyticsController {
     try {
       const { year, date, semester, department } = req.body;
       console.log(req.body);
-      // if (req && req.user && (!req.user.isActive || !req.user.isAdmin)) {
+      // if (req && req.user && (!req.user.isActive || !req.user.isAdmin))
       //   throw Error('USER IS NOT AUTHORIZED');
       // }
       const result = await listOfAbsentStudents(year, date, semester, department);
+      return res.status(200).send(result);
+    } catch (err) {
+      return next(err);
+    }
+  }
+  async vacantSeats(req, res, next) {
+    try {
+    //   if (req && req.user && (!req.user.isActive || !req.user.isAdmin)) {
+    //     throw Error('USER IS NOT AUTHORIZED');
+    //   }
+      const result = await listVacantSeats();
       return res.status(200).send(result);
     } catch (err) {
       return next(err);
