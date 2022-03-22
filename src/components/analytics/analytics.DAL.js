@@ -75,7 +75,7 @@ const listOfAbsentStudents = async (year, absentdate, semester, department) => {
   }
 }
 
-const listVacantSeats=async()=> {
+const listVacantSeats = async () => {
   try {
     return await Intake.aggregate([
       {
@@ -152,4 +152,4 @@ const listVacantSeats=async()=> {
     throw new HttpException(500, ANALYTICS_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', err, null);
   }
 }
-module.exports = { findBranchesOrdByTotalStudents, listOfAbsentStudents ,listVacantSeats}
+module.exports = { findBranchesOrdByTotalStudents, listOfAbsentStudents, listVacantSeats }

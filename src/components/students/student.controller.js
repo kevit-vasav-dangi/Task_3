@@ -1,10 +1,23 @@
+const { filter } = require('compression');
 const { Request, Response } = require('express')
 const Student = require('./students.model.js')
+const { sortByName, sortByBatch, sortBySemester } = require('./student.DAL.js');
+const { levels } = require('pino');
 
 class StudentsController {
     async getStudents(req, res) {
         try {
-            const results = await Student.find().exec();
+            
+            const queryString = req.query;
+            const filterKey = Object.keys(queryString)[2];
+            const filterValue = Object.values(queryString)[2]
+            const sortKey = Object.keys(queryString)[3];
+            const sortValue = Object.values(queryString)[3]
+            const results = await Student.find({ [filterKey]: filterValue })
+                .limit(parseInt(req.query.limit))
+                .skip(parseInt(req.query.skip))
+                .sort({ [sortKey]: sortValue });
+            
             return res.status(200).json(results);
         } catch (error) {
             return res.status(500).json({
